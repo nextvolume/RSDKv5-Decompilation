@@ -494,6 +494,10 @@ extern int32 gamePadCount;
 #include "SDL2/SDL2InputDevice.hpp"
 #endif
 
+#if RETRO_INPUTDEVICE_ALLEGRO4
+#include "Allegro4/Allegro4InputDevice.hpp"
+#endif
+
 #if RETRO_INPUTDEVICE_GLFW
 #include "GLFW/GLFWInputDevice.hpp"
 #endif

@@ -309,7 +309,14 @@ void RSDK::LoadSettingsINI()
 #endif
 
         engine.devMenu = true;
-        if (LoadDataPack(iniparser_getstring(ini, "Game:dataFile", "Data.rsdk"), 0, useBuffer))
+
+#ifdef DOS
+	#define DATA_FILE "Datarsdk.bin"
+#else
+	#define DATA_FILE "Data.rsdk"
+#endif
+	    
+        if (LoadDataPack(iniparser_getstring(ini, "Game:dataFile", DATA_FILE), 0, useBuffer))
             engine.devMenu = iniparser_getboolean(ini, "Game:devMenu", false);
 
 #if !RETRO_USE_ORIGINAL_CODE
@@ -357,6 +364,12 @@ void RSDK::LoadSettingsINI()
         videoSettings.refreshRate   = iniparser_getint(ini, "Video:refreshRate", 60);
         videoSettings.shaderSupport = iniparser_getboolean(ini, "Video:shaderSupport", true);
         videoSettings.shaderID      = iniparser_getint(ini, "Video:screenShader", SHADER_NONE);
+
+	videoSettings.scale	    = iniparser_getdouble(ini, "Video:scale", 1);
+
+#if DOS
+	videoSettings.useVGAMode    = iniparser_getint(ini, "Video:useVGAMode", 0);
+#endif
 
 #if !RETRO_USE_ORIGINAL_CODE
         customSettings.maxPixWidth = iniparser_getint(ini, "Video:maxPixWidth", DEFAULT_PIXWIDTH);

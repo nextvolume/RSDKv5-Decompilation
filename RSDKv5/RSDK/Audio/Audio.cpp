@@ -33,6 +33,12 @@ float speedMixAmounts[0x400];
 #include "SDL2/SDL2AudioDevice.cpp"
 #elif RETRO_AUDIODEVICE_OBOE
 #include "Oboe/OboeAudioDevice.cpp"
+#elif RETRO_AUDIODEVICE_ALLEGRO4
+#include "Allegro4/Allegro4AudioDevice.cpp"
+#elif RETRO_AUDIODEVICE_WSS
+#include "WSS/WSSAudioDevice.cpp"
+#elif RETRO_AUDIODEVICE_DOSSOUND
+#include "DOSSound/DOSSoundAudioDevice.cpp"
 #endif
 
 uint8 AudioDeviceBase::initializedAudioChannels = false;
@@ -474,14 +480,14 @@ int32 RSDK::PlaySfx(uint16 sfx, uint32 loopPoint, uint32 priority)
 }
 
 void RSDK::SetChannelAttributes(uint8 channel, float volume, float panning, float speed)
-{
+{		
     if (channel < CHANNEL_COUNT) {
-        volume                   = fminf(4.0, volume);
-        volume                   = fmaxf(0.0, volume);
+        volume                   = MIN(4.0, volume);
+        volume                   = MAX(0.0, volume);
         channels[channel].volume = volume;
 
-        panning               = fminf(1.0, panning);
-        panning               = fmaxf(-1.0f, panning);
+        panning               = MIN(1.0, panning);
+        panning               = MAX(-1.0f, panning);
         channels[channel].pan = panning;
 
         if (speed > 0.0)

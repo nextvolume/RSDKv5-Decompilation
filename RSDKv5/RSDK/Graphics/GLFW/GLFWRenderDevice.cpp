@@ -6,6 +6,8 @@
 #define _GLDEFINE "\n"
 #endif
 
+#warning "MODIFIED BY nextvolume"
+
 const GLchar *backupVertex = R"aa(
 in_V vec3 in_pos;
 in_V vec4 in_color;
@@ -732,6 +734,8 @@ void RenderDevice::SetupImageTexture(int32 width, int32 height, uint8 *imagePixe
 void RenderDevice::SetupVideoTexture_YUV420(int32 width, int32 height, uint8 *yPlane, uint8 *uPlane, uint8 *vPlane, int32 strideY, int32 strideU,
                                             int32 strideV)
 {
+	return; // ---TEST---
+	
     uint32 *pixels = videoBuffer;
     uint32 *preY   = pixels;
     int32 pitch    = RETRO_VIDEO_TEXTURE_W - width;
@@ -777,6 +781,9 @@ void RenderDevice::SetupVideoTexture_YUV420(int32 width, int32 height, uint8 *yP
 void RenderDevice::SetupVideoTexture_YUV422(int32 width, int32 height, uint8 *yPlane, uint8 *uPlane, uint8 *vPlane, int32 strideY, int32 strideU,
                                             int32 strideV)
 {
+	return; // ---TEST---
+	
+	
     uint32 *pixels = videoBuffer;
     uint32 *preY   = pixels;
     int32 pitch    = RETRO_VIDEO_TEXTURE_W - width;
@@ -822,6 +829,9 @@ void RenderDevice::SetupVideoTexture_YUV422(int32 width, int32 height, uint8 *yP
 void RenderDevice::SetupVideoTexture_YUV444(int32 width, int32 height, uint8 *yPlane, uint8 *uPlane, uint8 *vPlane, int32 strideY, int32 strideU,
                                             int32 strideV)
 {
+	return; // ---TEST---
+	
+	
     uint32 *pixels = videoBuffer;
     int32 pitch    = RETRO_VIDEO_TEXTURE_W - width;
 

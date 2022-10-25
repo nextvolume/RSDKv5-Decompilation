@@ -53,6 +53,10 @@ void android_main(struct android_app *ap)
 }
 #else
 int32 main(int32 argc, char *argv[]) { return RSDK_main(argc, argv, (void *)RSDK::LinkGameLogic); }
+#ifdef RSDK_USE_ALLEGRO4
+END_OF_MAIN()
+#endif
+
 #endif
 
 #endif

@@ -55,6 +55,8 @@ endif
 
 ifeq ($(OS),Windows_NT)
 	PLATFORM ?= Windows
+else ifeq ($(OS),DOS)
+	PLATFORM ?= Dos
 else
 	UNAME_S := $(shell uname -s)
 
@@ -115,9 +117,9 @@ ifeq ($(VERBOSE),0)
 endif
 
 ifeq ($(STATICGAME),0)
-	DEFINES += -DRETRO_STANDALONE=1
-else
 	DEFINES += -DRETRO_STANDALONE=0
+else
+	DEFINES += -DRETRO_STANDALONE=1
 endif
 
 DEFINES += -DRETRO_REVISION=$(RSDK_REVISION)

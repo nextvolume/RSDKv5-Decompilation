@@ -137,6 +137,8 @@ const RenderVertex rsdkVertexBuffer[24] =
 #include "NX/NXRenderDevice.cpp"
 #elif RETRO_RENDERDEVICE_SDL2
 #include "SDL2/SDL2RenderDevice.cpp"
+#elif RETRO_RENDERDEVICE_ALLEGRO4
+#include "Allegro4/Allegro4RenderDevice.cpp"
 #elif RETRO_RENDERDEVICE_GLFW
 #include "GLFW/GLFWRenderDevice.cpp"
 #elif RETRO_RENDERDEVICE_EGL
@@ -606,7 +608,7 @@ void RSDK::FillScreen(uint32 color, int32 alphaR, int32 alphaG, int32 alphaB)
             int32 R = fbBlendR[(px & 0xF800) >> 11] + clrBlendR;
             int32 G = fbBlendG[(px & 0x7E0) >> 6] + clrBlendG;
             int32 B = fbBlendB[px & 0x1F] + clrBlendB;
-
+		
             currentScreen->frameBuffer[id] = (B) | (G << 6) | (R << 11);
         }
     }

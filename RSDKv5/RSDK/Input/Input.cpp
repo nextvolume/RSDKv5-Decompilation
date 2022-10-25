@@ -20,6 +20,12 @@ TouchInfo RSDK::touchInfo;
 GamePadMappings *RSDK::gamePadMappings = NULL;
 int32 RSDK::gamePadCount               = 0;
 
+
+#if RETRO_INPUTDEVICE_ALLEGRO4
+#undef RETRO_INPUTDEVICE_KEYBOARD
+#include "Allegro4/Allegro4InputDevice.cpp"
+#endif
+
 #if RETRO_INPUTDEVICE_KEYBOARD
 #include "Keyboard/KBInputDevice.cpp"
 #endif
@@ -51,6 +57,8 @@ int32 RSDK::gamePadCount               = 0;
 #if RETRO_INPUTDEVICE_PDBOAT
 #include "Paddleboat/PDBInputDevice.cpp"
 #endif
+
+
 
 void RSDK::RemoveInputDevice(InputDevice *targetDevice)
 {
@@ -100,9 +108,9 @@ void RSDK::InitInputDevices()
     for (int32 i = 0; i < PLAYER_COUNT; ++i) inputSlots[i] = INPUT_AUTOASSIGN;
 #endif
 
-#if RETRO_INPUTDEVICE_KEYBOARD
+/*#if RETRO_INPUTDEVICE_KEYBOARD
     SKU::InitKeyboardInputAPI();
-#endif
+#endif*/
 
 #if RETRO_INPUTDEVICE_RAWINPUT
     SKU::InitHIDAPI();
@@ -124,6 +132,10 @@ void RSDK::InitInputDevices()
     SKU::InitSDL2InputAPI();
 #endif
 
+#if RETRO_INPUTDEVICE_ALLEGRO4
+    SKU::InitAllegro4InputAPI();
+#endif
+
 #if RETRO_INPUTDEVICE_GLFW
     SKU::InitGLFWInputAPI();
 #endif
@@ -138,6 +150,10 @@ void RSDK::ReleaseInputDevices()
 #if RETRO_INPUTDEVICE_SDL2
     SKU::ReleaseSDL2InputAPI();
 #endif
+
+#if RETRO_INPUTDEVICE_ALLEGRO4
+    SKU::ReleaseAllegro4InputAPI();
+#endif	
 }
 
 void RSDK::ClearInput()
@@ -193,6 +209,8 @@ void RSDK::ClearInput()
 
 void RSDK::ProcessInput()
 {
+	//printf("ProcessInput() %d\n", inputDeviceCount);
+	
     ClearInput();
 
     bool32 anyPress = false;

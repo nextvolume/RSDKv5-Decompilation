@@ -538,7 +538,11 @@ void RSDK::SetupFunctionTables()
 }
 
 #if RETRO_REV02
-void RSDK::LinkGameLogic(void *info) { PrintLog(PRINT_POPUP, "Internal LinkGameLogic() function called, no logic will be linked"); }
+extern "C" {
+void LinkGameLogicDLL(void *info);
+}
+
+void RSDK::LinkGameLogic(void *info) { PrintLog(PRINT_POPUP, "Internal LinkGameLogic() function called, no logic will be linked"); LinkGameLogicDLL(info); }
 #else
 void RSDK::LinkGameLogic(GameInfo info) { PrintLog(PRINT_POPUP, "Internal LinkGameLogic() function called, no logic will be linked"); }
 #endif

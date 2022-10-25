@@ -425,7 +425,7 @@ public:
 #endif
 #endif
 
-#if RETRO_PLATFORM == RETRO_SWITCH
+#if RETRO_PLATFORM == RETRO_SWITCH || defined(NOLINK)
     // do nothing for switch
     static inline Handle Open(std::string path) { return NULL; }
 #else
@@ -481,7 +481,7 @@ public:
 
     static inline void Close(Handle handle)
     {
-#if RETRO_PLATFORM == RETRO_SWITCH
+#if RETRO_PLATFORM == RETRO_SWITCH || defined(NOLINK)
         return;
 #else
         if (handle)
@@ -495,7 +495,7 @@ public:
 
     static inline void *GetSymbol(Handle handle, const char *symbol)
     {
-#if RETRO_PLATFORM == RETRO_SWITCH
+#if RETRO_PLATFORM == RETRO_SWITCH || defined(NOLINK)
         return NULL;
 #else
         if (!handle)
@@ -510,7 +510,7 @@ public:
 
     static inline char *GetError()
     {
-#if RETRO_PLATFORM == RETRO_SWITCH
+#if RETRO_PLATFORM == RETRO_SWITCH || defined(NOLINK)
         return NULL;
 #else
 #if RETRO_PLATFORM == RETRO_WIN

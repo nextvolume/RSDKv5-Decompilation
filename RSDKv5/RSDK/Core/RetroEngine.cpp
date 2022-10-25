@@ -84,8 +84,7 @@ int32 RSDK::RunRetroEngine(int32 argc, char *argv[])
         if (!RenderDevice::isRunning)
             break;
 
-        if (RenderDevice::CheckFPSCap()) {
-            RenderDevice::UpdateFPSCap();
+        if (RenderDevice::CheckFPSCap()) {		
 
             AudioDevice::FrameInit();
 
@@ -285,6 +284,8 @@ int32 RSDK::RunRetroEngine(int32 argc, char *argv[])
                 RenderDevice::ProcessDimming();
 
             RenderDevice::FlipScreen();
+	    RenderDevice::UpdateFPSCap();
+
         }
     }
 

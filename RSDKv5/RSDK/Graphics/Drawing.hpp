@@ -126,6 +126,12 @@ struct VideoSettings {
     float viewportH;
     float viewportX;
     float viewportY;
+    
+    float scale;
+    
+#ifdef DOS
+    int32 useVGAMode;
+#endif
 };
 
 enum VideoSettingsValues {
@@ -153,6 +159,10 @@ enum VideoSettingsValues {
     VIDEOSETTING_RELOAD,
     VIDEOSETTING_CHANGED,
     VIDEOSETTING_WRITE,
+    
+#ifdef DOS
+    VIDEOSETTING_USEVGAMODE,
+#endif
 };
 
 struct float4 {
@@ -252,6 +262,8 @@ private:
 #include "GLFW/GLFWRenderDevice.hpp"
 #elif RETRO_RENDERDEVICE_EGL
 #include "EGL/EGLRenderDevice.hpp"
+#elif RETRO_RENDERDEVICE_ALLEGRO4
+#include "Allegro4/Allegro4RenderDevice.hpp"
 #endif
 
 extern DrawList drawGroups[DRAWGROUP_COUNT];

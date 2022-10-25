@@ -82,6 +82,12 @@ void LoadSfx(char *filePath, uint8 plays, uint8 scope);
 #include "SDL2/SDL2AudioDevice.hpp"
 #elif RETRO_AUDIODEVICE_OBOE
 #include "Oboe/OboeAudioDevice.hpp"
+#elif RETRO_AUDIODEVICE_ALLEGRO4
+#include "Allegro4/Allegro4AudioDevice.hpp"
+#elif RETRO_AUDIODEVICE_WSS
+#include "WSS/WSSAudioDevice.hpp"
+#elif RETRO_AUDIODEVICE_DOSSOUND
+#include "DOSSound/DOSSoundAudioDevice.hpp"
 #endif
 
 namespace RSDK

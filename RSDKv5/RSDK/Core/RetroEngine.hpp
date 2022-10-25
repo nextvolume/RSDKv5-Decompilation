@@ -1,6 +1,10 @@
 #ifndef RETROENGINE_H
 #define RETROENGINE_H
 
+#if DOS
+#undef __STRICT_ANSI__
+#endif
+
 // ================
 // STANDARD LIBS
 // ================
@@ -8,6 +12,8 @@
 #include <string.h>
 #include <cmath>
 #include <ctime>
+
+
 
 // ================
 // STANDARD TYPES
@@ -134,7 +140,7 @@ enum GameRegions {
 #elif defined __SWITCH__
 #define RETRO_PLATFORM   (RETRO_SWITCH)
 #define RETRO_DEVICETYPE (RETRO_STANDARD)
-#elif defined __linux__
+#elif defined(__linux__) || defined(DOS)
 #define RETRO_PLATFORM   (RETRO_LINUX)
 #define RETRO_DEVICETYPE (RETRO_STANDARD)
 #else
@@ -315,6 +321,15 @@ enum GameRegions {
 #undef RETRO_AUDIODEVICE_SDL2
 #define RETRO_AUDIODEVICE_SDL2 (1)
 
+#elif defined(RSDK_USE_ALLEGRO4)
+#undef RETRO_RENDERDEVICE_ALLEGRO4
+#define RETRO_RENDERDEVICE_ALLEGRO4 (1)
+#undef RETRO_INPUTDEVICE_ALLEGRO4
+#define RETRO_INPUTDEVICE_ALLEGRO4 (1)
+#undef RETRO_AUDIODEVICE_ALLEGRO4
+#if !defined(AUDIO_NOALLEG)
+#define RETRO_AUDIODEVICE_ALLEGRO4 (1)
+#endif
 #else
 #error RSDK_USE_SDL2 or RSDK_USE_GL3 must be defined.
 #endif //! RSDK_USE_SDL2
@@ -463,6 +478,12 @@ enum GameRegions {
 #endif
 #endif
 
+#if RETRO_RENDERDEVICE_ALLEGRO4
+#define ALLEGRO_NO_KEY_DEFINES
+#include <allegro.h>
+#include <vector>
+#endif
+
 #include <theora/theoradec.h>
 
 // ============================
@@ -515,9 +536,9 @@ struct RetroEngine {
     RetroEngine() {}
 
 #if RETRO_STANDALONE
-    bool32 useExternalCode = true;
-#else
     bool32 useExternalCode = false;
+#else
+    bool32 useExternalCode = true;
 #endif
 
     bool32 devMenu        = false;

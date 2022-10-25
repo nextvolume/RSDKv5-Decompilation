@@ -8,10 +8,22 @@ namespace RSDK
 #define INT_TO_VOID(x) (void *)(size_t)(x)
 #define VOID_TO_INT(x) (int32)(size_t)(x)
 
+#ifndef MIN
 #define MIN(a, b)                      ((a) < (b) ? (a) : (b))
+#endif
+	
+#ifndef MAX
 #define MAX(a, b)                      ((a) > (b) ? (a) : (b))
-#define CLAMP(value, minimum, maximum) (((value) < (minimum)) ? (minimum) : (((value) > (maximum)) ? (maximum) : (value)))
+#endif
 
+#ifdef CLAMP
+#undef CLAMP
+#endif	
+	
+//#ifndef CLAMP	
+#define CLAMP(value, minimum, maximum) (((value) < (minimum)) ? (minimum) : (((value) > (maximum)) ? (maximum) : (value)))
+//#endif
+	
 #define TO_FIXED(x)   ((x) << 16)
 #define FROM_FIXED(x) ((x) >> 16)
 
