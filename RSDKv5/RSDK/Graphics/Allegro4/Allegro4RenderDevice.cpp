@@ -62,7 +62,11 @@ bool RenderDevice::Init()
     mouseInstalled = install_mouse() > 0;
 
     float sw = videoSettings.windowWidth, sh = videoSettings.windowHeight;
-    
+
+#if DOS
+	videoSettings.windowed = false;
+#endif
+	
     if (!videoSettings.windowed) {
 	if (videoSettings.fsWidth)
 	    sw = videoSettings.fsWidth;
@@ -71,6 +75,17 @@ bool RenderDevice::Init()
 	    sh = videoSettings.fsHeight;
     }
 
+    if (videoSettings.scale == 0)
+	    videoSettings.scale = 1;
+
+#if DOS
+    if ((sw * videoSettings.scale) == 424)
+    {
+        sw = 320;
+        videoSettings.scale = 1;
+    }
+#endif
+    
       set_color_depth(16);
     if (
 #if DOS
@@ -90,6 +105,7 @@ bool RenderDevice::Init()
         if (!videoSettings.useVGAMode) {
 	    PrintLog(PRINT_NORMAL, "Couldn't get hi-color mode.");
 	    videoSettings.useVGAMode=1;
+	    videoSettings.scale=1;
         } 
 
 	set_color_depth(8);
@@ -133,6 +149,9 @@ bool RenderDevice::Init()
     
     int w, h;
     
+    sw = SCREEN_W / videoSettings.scale;
+    sh = SCREEN_H / videoSettings.scale;
+   
     if (sw < 320)	w = 320; else w = sw;
     if (sh < 240)	h = 240; else h = sh;
     
