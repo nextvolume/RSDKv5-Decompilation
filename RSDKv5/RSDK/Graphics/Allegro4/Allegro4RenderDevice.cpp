@@ -481,7 +481,8 @@ bool RenderDevice::ProcessEvents()
 		else
 			OpenDevMenu();
 	}
-	
+	else
+		return (isRunning = false);
     }
     
     #if !RETRO_USE_ORIGINAL_CODE
