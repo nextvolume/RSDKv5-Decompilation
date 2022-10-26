@@ -266,6 +266,12 @@ CustomSettings RSDK::customSettings;
 
 char buttonNames[18][8] = { "U", "D", "L", "R", "START", "SELECT", "LSTICK", "RSTICK", "L1", "R1", "C", "Z", "A", "B", "X", "Y", "L2", "R2" };
 
+#ifdef DOS
+	#define DATA_FILE "Datarsdk.bin"
+#else
+	#define DATA_FILE "Data.rsdk"
+#endif
+
 void RSDK::LoadSettingsINI()
 {
     videoSettings.screenCount = 1;
@@ -306,14 +312,6 @@ void RSDK::LoadSettingsINI()
         SKU::curSKU.language = iniparser_getint(ini, "Game:language", LANGUAGE_EN);
 #else
         gameVerInfo.language = iniparser_getint(ini, "Game:language", LANGUAGE_EN);
-#endif
-
-        engine.devMenu = true;
-
-#ifdef DOS
-	#define DATA_FILE "Datarsdk.bin"
-#else
-	#define DATA_FILE "Data.rsdk"
 #endif
 	    
         if (LoadDataPack(iniparser_getstring(ini, "Game:dataFile", DATA_FILE), 0, useBuffer))
@@ -555,9 +553,11 @@ void RSDK::LoadSettingsINI()
             controller[i].keyStart.keyMap  = defaultKeyMaps[i][KEY_START];
             controller[i].keySelect.keyMap = defaultKeyMaps[i][KEY_SELECT];
         }
+	
+	engine.devMenu = false;
 
         SaveSettingsINI(true);
-        engine.devMenu = LoadDataPack("Data.rsdk", 0, useBuffer);
+        LoadDataPack(DATA_FILE, 0, useBuffer);
     }
 }
 
